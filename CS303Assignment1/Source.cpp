@@ -5,11 +5,10 @@ using namespace std;
 
 int main() {
 
-    // int array[150];
+ 
     int* array = new int[150];
     int arraySize = 0;
     ifstream file("input.txt");
-    // i literally just found out that there is a chat box here on replit lol
     if (file.fail()) {
         cout << "Input file opening failed" << endl;
         exit(1);
@@ -30,8 +29,8 @@ int main() {
             continue;
         }
         switch (choice) {
-            // Search for a value
 
+            // Search for a value
         case 'A': {
             int searchValue;
             cout << "Enter a value to search for: ";

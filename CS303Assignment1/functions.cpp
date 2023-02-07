@@ -4,6 +4,7 @@
 #include <string>
 using namespace std;
 
+//Print out menu for users to choose
 char options() {
     cout << "CHOICES\n";
     cout << "A - Search for a value\n";
@@ -38,6 +39,7 @@ char options() {
     }
 }
 
+// Modify a value, take input from user
 void modifyValue(int*& array, int size, int index, int newValue) {
     if (index < 0 || index >= size) {
         cout << "Index out of range" << endl;
@@ -51,12 +53,14 @@ void modifyValue(int*& array, int size, int index, int newValue) {
     cout << endl;
 }
 
+// Add a value to the end of the array, take input from user
 void addValue(int*& array, int size, int newValue) {
     array[size] = newValue;
     cout << "Value " << newValue << " was added to the end of the array." << endl;
     cout << endl;
 }
 
+//Find a value, take input from user, tell them if the value does not exist inside the array
 int findIndex(const int*& array, int size, int value) {
     for (int i = 0; i < size; i++) {
         if (array[i] == value) {
@@ -66,6 +70,7 @@ int findIndex(const int*& array, int size, int value) {
     return -1;
 }
 
+//Remove a value, take input from user
 void replaceValue(int*& array, int& size, int index) {
     if (index < 0 || index >= size) {
         return;
