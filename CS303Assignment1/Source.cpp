@@ -15,12 +15,6 @@ int main() {
         exit(1);
     }
 
-    ofstream outFile("output1.txt");
-    if (outFile.fail()) {
-        cout << "Output file opening failed" << endl;
-        exit(1);
-    }
-
     int value;
     while (file >> value) {
         array[arraySize++] = value;
@@ -57,13 +51,13 @@ int main() {
             }
             for (int i = 0; i < arraySize; i++) {
                 cout << array[i] << " ";
-                outFile << array[i] << " ";
+            
                 if ((i + 1) % 10 == 0) {
                     cout << endl;
-                    outFile << endl;
+                    
                 }
             }
-            outFile << endl;
+            
             cout << endl;
             break;
         }
@@ -82,13 +76,13 @@ int main() {
             }
             for (int i = 0; i < arraySize; i++) {
                 cout << array[i] << " ";
-                outFile << array[i] << " ";
+                
                 if ((i + 1) % 10 == 0) {
                     cout << endl;
-                    outFile << endl;
+                    
                 }
             }
-            outFile << endl;
+           
             cout << endl;
             break;
         }
@@ -101,13 +95,13 @@ int main() {
             arraySize++;
             for (int i = 0; i < arraySize; i++) {
                 cout << array[i] << " ";
-                outFile << array[i] << " ";
+                
                 if ((i + 1) % 10 == 0) {
                     cout << endl;
-                    outFile << endl;
+                    
                 }
             }
-            outFile << endl;
+           
             cout << endl;
             cout << endl;
             break;
@@ -120,13 +114,13 @@ int main() {
             replaceValue(array, arraySize, removeIndex);
             for (int i = 0; i < arraySize; i++) {
                 cout << array[i] << " ";
-                outFile << array[i] << " ";
+                
                 if ((i + 1) % 10 == 0) {
                     cout << endl;
-                    outFile << endl;
+                   
                 }
             }
-            outFile << endl;
+            
             cout << endl;
             break;
         }
@@ -137,6 +131,6 @@ int main() {
 
     // Close the files
     file.close();
-    outFile.close();
+   
     return 0;
 }
