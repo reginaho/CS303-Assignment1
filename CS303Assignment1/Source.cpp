@@ -5,12 +5,17 @@ using namespace std;
 
 int main() {
 
- 
     int* array = new int[150];
     int arraySize = 0;
     ifstream file("input.txt");
     if (file.fail()) {
         cout << "Input file opening failed" << endl;
+        exit(1);
+    }
+
+    ofstream outFile("output1.txt");
+    if (outFile.fail()) {
+        cout << "Output file opening failed" << endl;
         exit(1);
     }
 
@@ -29,8 +34,8 @@ int main() {
             continue;
         }
         switch (choice) {
-
             // Search for a value
+
         case 'A': {
             int searchValue;
             cout << "Enter a value to search for: ";
@@ -48,61 +53,23 @@ int main() {
             else {
                 cout << "Value found at index " << index << endl;
             }
-            for (int i = 0; i < arraySize; i++) {
-                cout << array[i] << " ";
-            
-                if ((i + 1) % 10 == 0) {
-                    cout << endl;
-                    
-                }
-            }
-            
-            cout << endl;
+            outputArray(array, arraySize, outFile);
             break;
         }
                 // Modify the index
         case 'B': {
-            int modifyIndex, ValueToModify;
+            string modifyIndex;
             cout << "Enter the index to modify: ";
             cin >> modifyIndex;
-            if (modifyIndex >= 0 && modifyIndex < arraySize) {
-                cout << "Enter the new value: ";
-                cin >> ValueToModify;
-                array[modifyIndex] = ValueToModify;
-            }
-            else {
-                cout << "Invalid index." << endl;
-            }
-            for (int i = 0; i < arraySize; i++) {
-                cout << array[i] << " ";
-                
-                if ((i + 1) % 10 == 0) {
-                    cout << endl;
-                    
-                }
-            }
-           
-            cout << endl;
+            modifyValue(array, arraySize, modifyIndex, outFile);
             break;
         }
                 // A value to add to the end of the array
         case 'C': {
-            int newValue;
+            string newValue;
             cout << "Enter a value to add to the end of the array: ";
             cin >> newValue;
-            addValue(array, arraySize, newValue);
-            arraySize++;
-            for (int i = 0; i < arraySize; i++) {
-                cout << array[i] << " ";
-                
-                if ((i + 1) % 10 == 0) {
-                    cout << endl;
-                    
-                }
-            }
-           
-            cout << endl;
-            cout << endl;
+            addValue(array, arraySize, newValue, outFile);
             break;
         }
                 // Remove a value at index
@@ -111,25 +78,18 @@ int main() {
             cout << "Enter the index to remove: ";
             cin >> removeIndex;
             replaceValue(array, arraySize, removeIndex);
-            for (int i = 0; i < arraySize; i++) {
-                cout << array[i] << " ";
-                
-                if ((i + 1) % 10 == 0) {
-                    cout << endl;
-                   
-                }
-            }
-            
-            cout << endl;
+            outputArray(array, arraySize, outFile);
             break;
         }
+        case 'Q': {
+            cout << "Have a good day" << endl;
         }
-        // Quit the program
+        }
 
     } while (choice != 'Q');
 
-    // Close the files
+    // Quit the program
     file.close();
-   
+    outFile.close();
     return 0;
 }

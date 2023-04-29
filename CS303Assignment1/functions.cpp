@@ -4,7 +4,6 @@
 #include <string>
 using namespace std;
 
-//Print out menu for users to choose
 char options() {
     cout << "CHOICES\n";
     cout << "A - Search for a value\n";
@@ -39,28 +38,77 @@ char options() {
     }
 }
 
-// Modify a value, take input from user
-void modifyValue(int*& array, int size, int index, int newValue) {
-    if (index < 0 || index >= size) {
-        cout << "Index out of range" << endl;
-        return;
+void modifyValue(int*& array, int size, string indexInput, std::ofstream& outFile) {
+    string userInput;
+    int newValue, index;
+
+    try {
+        for (int i = 0; i < indexInput.size(); i++) {
+            if (!isdigit(indexInput.at(i)))
+                throw runtime_error("Invalid index value");
+        }
+
+        index = stoi(indexInput);
+
+        if (index < 0 || index >= size) {
+            throw out_of_range("Index out of range");
+        }
+
+        cout << "Enter the new value: ";
+        cin >> userInput;
+
+        for (int i = 0; i < userInput.size(); i++) {
+            if (!isdigit(userInput.at(i)))
+                throw runtime_error("Invalid value for modification");
+        }
+
+        newValue = stoi(userInput);
+
+        int oldValue = array[index];
+        array[index] = newValue;
+        cout << "The old value at index " << index << " was " << oldValue
+            << " and is now " << array[index] << endl;
+        cout << endl;
+        outputArray(array, size, outFile);
     }
-
-    int oldValue = array[index];
-    array[index] = newValue;
-    cout << "The old value at index " << index << " was " << oldValue
-        << " and is now " << array[index] << endl;
-    cout << endl;
+    catch (out_of_range& e) {
+        cout << "Error: " << e.what() << endl << endl;
+    }
+    catch (runtime_error& e) {
+        cout << "Error: " << e.what() << endl << endl;
+    }
+    catch (...) {
+        cout << "Unknown error when modifying a value";
+        abort();
+    }
 }
 
-// Add a value to the end of the array, take input from user
-void addValue(int*& array, int size, int newValue) {
-    array[size] = newValue;
-    cout << "Value " << newValue << " was added to the end of the array." << endl;
-    cout << endl;
+void addValue(int*& array, int size, string newValueInput, std::ofstream& outFile) {
+    int newValue;
+
+    try {
+        for (int i = 0; i < newValueInput.size(); i++) {
+            if (!isdigit(newValueInput.at(i))) {
+                throw runtime_error("Invalid value");
+            }
+        }
+
+        newValue = stoi(newValueInput);
+
+        array[size] = newValue;
+        cout << "Value " << newValue << " was added to the end of the array."
+            << endl;
+        cout << endl;
+
+        size++;
+
+        outputArray(array, size, outFile);
+    }
+    catch (exception& e) {
+        cout << "Error: " << e.what() << endl << endl;
+    }
 }
 
-//Find a value, take input from user, tell them if the value does not exist inside the array
 int findIndex(const int*& array, int size, int value) {
     for (int i = 0; i < size; i++) {
         if (array[i] == value) {
@@ -70,7 +118,6 @@ int findIndex(const int*& array, int size, int value) {
     return -1;
 }
 
-//Remove a value, take input from user
 void replaceValue(int*& array, int& size, int index) {
     if (index < 0 || index >= size) {
         return;
@@ -79,4 +126,19 @@ void replaceValue(int*& array, int& size, int index) {
         array[i] = array[i + 1];
     }
     size--;
+}
+
+void outputArray(int*& arrayint, int& size, ofstream& outFile) {
+    for (int i = 0; i < size; i++) {
+        cout << arrayint[i] << " ";
+        outFile << arrayint[i] << " ";
+        if ((i + 1) % 10 == 0) {
+            cout << endl;
+            outFile << endl;
+        }
+    }
+    outFile << endl;
+    cout << endl;
+    cin.clear();
+    cin.ignore(512, '\n');
 }
